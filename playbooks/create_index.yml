@@ -1,0 +1,9 @@
+- name: Create Splunk Index
+  hosts: splunk
+  become: yes
+  vars:
+    index_name: index1
+    splunk_password: admin123
+  tasks:
+    - name: Create index in Splunk
+      command: /opt/splunk/bin/splunk add index {{ index_name }} -auth admin:{{ splunk_password }}

@@ -1,0 +1,9 @@
+- name: Uninstall Splunk App/Add-on
+  hosts: splunk
+  become: yes
+  vars:
+    app_name: CiscoNVM #Metion app folder name
+    splunk_password: admin123
+  tasks:
+    - name: Remove app
+      command: /opt/splunk/bin/splunk remove app {{ app_name }} -auth admin:{{ splunk_password }}

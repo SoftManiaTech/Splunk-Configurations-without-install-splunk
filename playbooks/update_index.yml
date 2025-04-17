@@ -1,0 +1,15 @@
+- name: Update Splunk Index Settings
+  hosts: splunk
+  become: yes
+  vars:
+    index_name: index1
+    splunk_password: admin123
+    max_size: 600000
+  tasks:
+    - name: Set maxTotalDataSizeMB for index
+      command: >
+        /opt/splunk/bin/splunk edit index {{ index_name }}
+        -maxTotalDataSizeMB {{ max_size }} -auth admin:{{ splunk_password }}
+
+    - name: Restart Splunk
+      shell: /opt/splunk/bin/splunk restart --accept-license --answer-yes --no-prompt

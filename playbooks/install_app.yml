@@ -1,0 +1,14 @@
+- name: Install Splunk App/Add-on
+  hosts: splunk
+  become: yes
+  vars:
+    app_url: "https://raw.githubusercontent.com/SoftManiaTech/Bots_V3_Splunkbase_apps/main/cisco-endpoint-security-analytics-cesa_407.tgz"
+    splunk_password: admin123
+  tasks:
+    - name: Download app
+      get_url:
+        url: "{{ app_url }}"
+        dest: /opt/splunk/etc/apps/app.spl
+
+    - name: Install app
+      command: /opt/splunk/bin/splunk install app /opt/splunk/etc/apps/app.spl -auth admin:{{ splunk_password }}

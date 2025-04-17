@@ -1,0 +1,16 @@
+- name: Delete Splunk Index
+  hosts: splunk
+  become: yes
+  vars:
+    index_name: index1
+    splunk_password: admin123
+  tasks:
+    - name: Stop Splunk before index delete
+      command: "/opt/splunk/bin/splunk stop"
+
+    - name: Delete index
+      become_user: splunk
+      command: /opt/splunk/bin/splunk remove index {{ index_name }} -auth admin:{{ splunk_password }}
+    
+    - name: Start Splunk service
+      command: "/opt/splunk/bin/splunk start"
